@@ -1,0 +1,26 @@
+services:
+  api:
+    build: .
+    environment:
+      NODE_ENV: development
+      PORT: 9000
+      PGHOST: db
+      PGUSER: dbuser
+      PGDATABASE: bookstore
+      PGPASSWORD: dbpass
+      PGPORT: 54321
+    ports:
+      - 9000:9000
+    networks:
+      - projectnetwork
+  
+  db:
+    networks:
+      - projectnetwork
+
+  pgadmin:
+    networks:
+      - projectnetwork
+
+networks:
+  projectnetwork:
