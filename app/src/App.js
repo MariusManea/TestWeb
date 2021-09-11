@@ -1,6 +1,6 @@
 import './App.css';
 
-import LoginPage from './Login/LoginPage';
+import RegisterPage from './Register/RegisterPage';
 import FormPage from "./Form/FormPage";
 import LogoutPage from "./Logout/LogoutPage";
 import RootPage from "./Root/RootPage";
@@ -14,7 +14,7 @@ function App() {
         <div className="App">
             <BrowserRouter basename={'/'}>
                 <Switch>
-                    <Route path={'/login'} component={LoginPage}/>
+                    <Route path={'/login'} component={RegisterPage}/>
                     <Route path={'/form'} component={FormPage}/>
                     <Route path={'/logout'} component={LogoutPage}/>
                     <Route path={'/'} component={() => <RootPage data={data}/>}/>

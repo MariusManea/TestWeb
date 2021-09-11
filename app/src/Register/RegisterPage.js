@@ -1,6 +1,5 @@
 import {Button, makeStyles} from "@material-ui/core";
-import './LogoutPage.css'
-
+import './RegisterPage.css'
 const useStyles = makeStyles({
     UserButton: {
         background: 'linear-gradient(45deg, #F44121 30%, #FFC440 90%)',
@@ -18,22 +17,22 @@ const useStyles = makeStyles({
     },
 })
 
-function LogoutPage(props) {
-    const onLogoutClick = (event) => {
+function RegisterPage(props) {
+
+
+    const onRegisterClick = (event) => {
         event.preventDefault();
-        localStorage.clear();
-        props.history.push('/');
+        localStorage.setItem("is_registering", "true");
+        props.history.push('/form');
     }
-
     const classes = useStyles();
-
     return (
-        <div className={"LogoutContainer"}>
-            <Button className={classes.UserButton} onClick={onLogoutClick}>
-                Logout
+        <div className={"RegisterContainer"}>
+            <Button className={classes.UserButton} onClick={onRegisterClick}>
+                Register
             </Button>
         </div>
     );
 }
 
-export default LogoutPage;
+export default RegisterPage;

@@ -1,6 +1,7 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Button, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import './RootPage.css';
+import Axios from "axios";
 
 const useStyles = makeStyles({
     SortButton: {
@@ -27,9 +28,24 @@ const useStyles = makeStyles({
 function RootPage(props) {
     const classes = useStyles();
 
-    const getUsersData = () => {
-        return props.data.length !== 0 ? props.data : false;
-    }
+    const [usersList, setUsersList] = useState([]);
+
+    useEffect(() => {
+        Axios({
+            method: "GET",
+            url: "http://localhost:9000/api/v1/users",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        }).then(res => {
+            setUsersList(res.data.response);
+        }).catch(error => {
+            if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
+                setUsersList([]);
+            }
+        });
+    })
 
     const settingEmailOrder = (value) => {
         setEmailOrder(value);
@@ -72,7 +88,7 @@ function RootPage(props) {
     const [emailAsc, setEmailOrder] = useState(true);
     const [yearAsc, setYearOrder] = useState(true);
     const [sortedBy, setSortCriteria] = useState({value: ""});
-    const userData = getUsersData();
+    const userData = usersList;
 
     switch (sortedBy.value) {
         case "email":
@@ -85,7 +101,7 @@ function RootPage(props) {
             break;
     }
 
-    const componentShown = userData ? (
+    const componentShown = userData && userData.length > 0 ? (
         <TableContainer>
             <Table>
                 <TableHead>
@@ -120,6 +136,10 @@ function RootPage(props) {
         (<Button className={classes.ActionButton} onClick={() => props.history.push('/logout')}>Logout</Button>) :
         (<Button className={classes.ActionButton} onClick={() => props.history.push('/login')}>Login</Button>);
 
+    const registerButton = localStorage.getItem("is_logged_in") && localStorage.getItem("is_logged_in") === "false" ?
+        <Button className={classes.ActionButton} onClick={() => props.history.push('/register')}>Register</Button> :
+        "";
+
     return (
         <div className={"Root"}>
             <div id={"UsersTableContainer"}>
@@ -127,6 +147,7 @@ function RootPage(props) {
             </div>
             <div id={"ActionButtonContainer"}>
                 {userButtonShown}
+                {registerButton}
                 <Button className={classes.ActionButton} onClick={() => props.history.push('/movies')}>Movies</Button>
             </div>
         </div>
