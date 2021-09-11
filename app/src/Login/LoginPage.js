@@ -1,7 +1,14 @@
 function LoginPage(props) {
+    const onLoginClick = (event) => {
+        event.preventDefault();
+        localStorage.setItem("is_logged_in", "true");
+        props.history.push('/form');
+    }
     return (
         <div className={"Login"}>
-            <textarea>Pagina de login</textarea>
+            <button className={"UserButton"} onClick={onLoginClick}>
+                Login
+            </button>
         </div>
     );
 }
