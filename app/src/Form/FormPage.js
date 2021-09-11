@@ -8,6 +8,7 @@ function FormPage(props) {
         }
     });
 
+    console.log(props.handleUpdateData);
     const initialState = {value: ""};
     const [email, setEmail] = useState(initialState);
     const [year, setYear] = useState(initialState);
@@ -19,6 +20,8 @@ function FormPage(props) {
         const data = localStorage.getItem("data") ? JSON.parse(localStorage.getItem("data")) : [];
         data.push({"email": email.value, "year": year.value});
         localStorage.setItem("data", JSON.stringify(data));
+        props.handleUpdateData();
+        localStorage.setItem("data", "");
         props.history.push("/");
     }
 

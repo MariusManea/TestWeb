@@ -1,9 +1,10 @@
 import {useState} from 'react';
 
 function RootPage(props) {
+    console.log(props.data);
+
     const getUsersData = () => {
-        const data = localStorage.getItem("data");
-        return data !== null ? JSON.parse(data) : false;
+        return props.data.length !== 0 ? props.data : false;
     }
 
     const settingEmailOrder = (value) => {
