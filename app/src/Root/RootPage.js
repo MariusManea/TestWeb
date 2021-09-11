@@ -1,8 +1,6 @@
 import {useState} from 'react';
 
 function RootPage(props) {
-    console.log(props.data);
-
     const getUsersData = () => {
         return props.data.length !== 0 ? props.data : false;
     }
@@ -22,8 +20,8 @@ function RootPage(props) {
         return 0;
     }
     const compareYear = (a, b) => {
-        if (a.year < b.year) return yearAsc ? -1 : 1;
-        if (a.year > b.year) return yearAsc ? 1 : -1;
+        if (parseInt(a.year) < parseInt(b.year)) return yearAsc ? -1 : 1;
+        if (parseInt(a.year) > parseInt(b.year)) return yearAsc ? 1 : -1;
         return 0;
     }
 

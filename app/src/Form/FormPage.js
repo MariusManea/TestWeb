@@ -17,19 +17,26 @@ function FormPage(props) {
     const onYearChange = (event) => setYear({value: event.target.value});
     const onFormSubmit = (event) => {
         event.preventDefault();
-        const data = localStorage.getItem("data") ? JSON.parse(localStorage.getItem("data")) : [];
-        data.push({"email": email.value, "year": year.value});
-        localStorage.setItem("data", JSON.stringify(data));
-        props.handleUpdateData();
-        localStorage.setItem("data", "");
-        props.history.push("/");
+        if (submitValidation()) {
+            const data = localStorage.getItem("data") ? JSON.parse(localStorage.getItem("data")) : [];
+            data.push({"email": email.value, "year": year.value});
+            localStorage.setItem("data", JSON.stringify(data));
+            props.handleUpdateData();
+            localStorage.setItem("data", "");
+            props.history.push("/");
+        }
+    }
+
+    const submitValidation = () => {
+        const validEmail = new RegExp('^[a-zA-Z0-9._]+@[a-zA-Z0-9.]+\.[a-zA-Z]+$');
+        return validEmail.test(email.value) && year.value !== "" && parseInt(year.value) >= 0;
     }
 
     return (
         <div className={"Form"}>
             <form id={"RegisterForm"} onSubmit={onFormSubmit}>
                 <input className={"FormInput"} placeholder={"Email"} value={email.value} onChange={onEmailChange}/>
-                <input className={"FormInput"} placeholder={"Anul nasterii"} value={year.value} onChange={onYearChange}/>
+                <input className={"FormInput"} type={"number"} min={0} placeholder={"Anul nasterii"} value={year.value} onChange={onYearChange}/>
                 <button className={"SubmitButton"}>Submit</button>
             </form>
         </div>
