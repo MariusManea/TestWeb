@@ -1,23 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+
+import LoginPage from './Login/LoginPage';
+import FormPage from "./Form/FormPage";
+import LogoutPage from "./Logout/LogoutPage";
+import RootPage from "./Root/RootPage";
+
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter basename={'/'}>
+        <Switch>
+            <Route path={'/login'} component={LoginPage}/>
+            <Route path={'/form'} component={FormPage}/>
+            <Route path={'/logout'} component={LogoutPage}/>
+            <Route path={'/'} component={RootPage}/>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
