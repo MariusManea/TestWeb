@@ -127,6 +127,7 @@ function RootPage(props) {
             </div>
             <div id={"ActionButtonContainer"}>
                 {userButtonShown}
+                <Button className={classes.ActionButton} onClick={() => props.history.push('/movies')}>Movies</Button>
             </div>
         </div>
     );
