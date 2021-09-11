@@ -8,15 +8,16 @@ function FormPage(props) {
         }
     });
 
-    const [email, setEmail] = useState("");
-    const [year, setYear] = useState(-1);
+    const initialState = {value: ""};
+    const [email, setEmail] = useState(initialState);
+    const [year, setYear] = useState(initialState);
 
-    const onEmailChange = (event) => setEmail(event.target.value);
-    const onYearChange = (event) => setYear(event.target.value);
+    const onEmailChange = (event) => setEmail({value: event.target.value});
+    const onYearChange = (event) => setYear({value: event.target.value});
     const onFormSubmit = (event) => {
         event.preventDefault();
         const data = localStorage.getItem("data") ? JSON.parse(localStorage.getItem("data")) : [];
-        data.push({"email": email, "year": year});
+        data.push({"email": email.value, "year": year.value});
         localStorage.setItem("data", JSON.stringify(data));
         props.history.push("/");
     }
@@ -24,8 +25,8 @@ function FormPage(props) {
     return (
         <div className={"Form"}>
             <form id={"RegisterForm"} onSubmit={onFormSubmit}>
-                <input className={"FormInput"} placeholder={"Email"} value={email} onChange={onEmailChange}/>
-                <input className={"FormInput"} placeholder={"Anul nasterii"} value={year} onChange={onYearChange}/>
+                <input className={"FormInput"} placeholder={"Email"} value={email.value} onChange={onEmailChange}/>
+                <input className={"FormInput"} placeholder={"Anul nasterii"} value={year.value} onChange={onYearChange}/>
                 <button className={"SubmitButton"}>Submit</button>
             </form>
         </div>
