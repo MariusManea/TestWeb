@@ -114,7 +114,7 @@ function RootPage(props) {
                 </TableBody>
             </Table>
         </TableContainer>
-    ) : <div>Nu exista intrari disponibile</div>;
+    ) : <div id={"EmptyMessage"}>Nu exista intrari disponibile</div>;
 
     const userButtonShown = localStorage.getItem("is_logged_in") && localStorage.getItem("is_logged_in") === "true" ?
         (<Button className={classes.ActionButton} onClick={() => props.history.push('/logout')}>Logout</Button>) :
