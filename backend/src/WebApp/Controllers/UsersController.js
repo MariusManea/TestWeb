@@ -24,11 +24,15 @@ Router.post('/register', async(req, res) => {
 });
 
 Router.post('/login', async(req, res) => {
-    const userBody = new UserBody(req.body);
-    const userDto = await UsersManager.authenticateAsync(userBody.Email, userBody.Password);
-    const user = new UserLoginResponse(userDto.token, userDto.email, userDto.year);
+    try {
+        const userBody = new UserBody(req.body);
+        const userDto = await UsersManager.authenticateAsync(userBody.Email, userBody.Password);
+        const user = new UserLoginResponse(userDto.token, userDto.email, userDto.year);
 
-    ResponseFilter.setResponseDetails(res, 200, user);
+        ResponseFilter.setResponseDetails(res, 200, user);
+    } catch (e) {
+        ResponseFilter.setResponseDetails(res, 404, e.message);
+    }
 });
 
 Router.get('/', authorizeAndExtractTokenAsync, async (req, res) => {

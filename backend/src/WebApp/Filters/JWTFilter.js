@@ -10,10 +10,14 @@ const authorizeAndExtractTokenAsync = async (req, res, next) => {
     }
     const token = req.headers.authorization.split(" ")[1];
 
-    const decoded = await verifyAndDecodeDataAsync(token);
+    try {
+        const decoded = await verifyAndDecodeDataAsync(token);
 
-    req.user = decoded;
-    next();
+        req.user = decoded;
+        next();
+    } catch (e) {
+        throw e;
+    }
 };
 
 module.exports = {

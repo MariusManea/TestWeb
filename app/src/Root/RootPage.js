@@ -31,21 +31,23 @@ function RootPage(props) {
     const [usersList, setUsersList] = useState([]);
 
     useEffect(() => {
-        Axios({
-            method: "GET",
-            url: "http://localhost:9000/api/v1/users",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem('token')
-            }
-        }).then(res => {
-            setUsersList(res.data.response);
-        }).catch(error => {
-            if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
-                setUsersList([]);
-            }
-        });
-    })
+        if (localStorage.getItem('token') !== null && localStorage.getItem('token').length > 0) {
+            Axios({
+                method: "GET",
+                url: "http://localhost:9000/api/v1/users",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                }
+            }).then(res => {
+                setUsersList(res.data.response);
+            }).catch(error => {
+                if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setUsersList([]);
+                }
+            });
+        }
+    }, []);
 
     const settingEmailOrder = (value) => {
         setEmailOrder(value);
@@ -59,8 +61,8 @@ function RootPage(props) {
     }
 
     const compareEmail = (a, b) => {
-        if (a.email < b.email) return emailAsc ? -1 : 1;
-        if (a.email > b.email) return emailAsc ? 1 : -1;
+        if (a.email.toLowerCase() < b.email.toLowerCase()) return emailAsc ? -1 : 1;
+        if (a.email.toLowerCase() > b.email.toLowerCase()) return emailAsc ? 1 : -1;
         return 0;
     }
     const compareYear = (a, b) => {
@@ -136,9 +138,8 @@ function RootPage(props) {
         (<Button className={classes.ActionButton} onClick={() => props.history.push('/logout')}>Logout</Button>) :
         (<Button className={classes.ActionButton} onClick={() => props.history.push('/login')}>Login</Button>);
 
-    const registerButton = localStorage.getItem("is_logged_in") && localStorage.getItem("is_logged_in") === "false" ?
-        <Button className={classes.ActionButton} onClick={() => props.history.push('/register')}>Register</Button> :
-        "";
+    const registerButton = localStorage.getItem("is_logged_in") && localStorage.getItem("is_logged_in") === "true" ? "" :
+        <Button className={classes.ActionButton} onClick={() => props.history.push('/register')}>Register</Button> ;
 
     return (
         <div className={"Root"}>

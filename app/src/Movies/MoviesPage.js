@@ -104,7 +104,7 @@ function MoviesPage(props) {
         )
     }
 
-    let componentShown = <div>Nu s-a gasit niciun film</div>
+    let componentShown = <div id={"NoMovies"}>Nu s-a gasit niciun film</div>
 
     if (moviesList && moviesList.length !== 0) {
         componentShown =
