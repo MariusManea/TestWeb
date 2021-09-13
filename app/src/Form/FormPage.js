@@ -52,6 +52,9 @@ function FormPage(props) {
             }).then(res => {
                 localStorage.setItem('is_registering', 'false');
                 localStorage.setItem('token', res.data.response.token);
+                let data = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : [];
+                data = [...data, {'email': email.value, 'year': year.value}];
+                localStorage.setItem('user', JSON.stringify(data));
                 props.history.push('/');
                 return res.data.response
             }).catch(error => {

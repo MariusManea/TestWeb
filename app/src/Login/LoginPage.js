@@ -43,7 +43,7 @@ function LoginPage(props) {
         }).then(res => {
             localStorage.setItem('token', res.data.response.token);
             localStorage.setItem("is_logged_in", "true");
-            props.history.push('/');
+            setTimeout(() => props.history.push('/'), 1000);
         }).catch(error => {
             if (error && error.response && (error.response.status === 401 || error.response.status === 403)) {
                 throw error;

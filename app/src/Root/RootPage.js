@@ -31,7 +31,7 @@ function RootPage(props) {
     const [usersList, setUsersList] = useState([]);
 
     useEffect(() => {
-        if (localStorage.getItem('token') !== null && localStorage.getItem('token').length > 0) {
+        if (localStorage.getItem('token') !== null && localStorage.getItem('token').length > 0 && localStorage.getItem("is_logged_in") && localStorage.getItem("is_logged_in") === "true") {
             Axios({
                 method: "GET",
                 url: "http://localhost:9000/api/v1/users",
